@@ -31,7 +31,7 @@ extension DispatchQueue {
         if Thread.isMainThread {
             return item()
         } else {
-            return DispatchQueue.main.asyncAndWait(execute: item)
+            return DispatchQueue.main.sync(execute: item)
         }
     }
 }
