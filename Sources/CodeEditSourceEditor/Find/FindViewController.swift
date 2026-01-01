@@ -47,7 +47,7 @@ final class FindViewController: NSViewController {
     }
 
     override func loadView() {
-        super.loadView()
+        self.view = NSView()
 
         // Set up the `childView` as a subview of our view. Constrained to all edges, except the top is constrained to
         // the find panel's bottom

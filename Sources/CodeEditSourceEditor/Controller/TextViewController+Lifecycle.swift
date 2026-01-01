@@ -27,7 +27,7 @@ extension TextViewController {
     }
 
     override public func loadView() {
-        super.loadView()
+        self.view = NSView()
 
         scrollView = NSScrollView()
         scrollView.documentView = textView
@@ -46,20 +46,21 @@ extension TextViewController {
         minimapView = MinimapView(textView: textView, theme: configuration.appearance.theme)
         scrollView.addFloatingSubview(minimapView, for: .vertical)
 
+        styleTextView()
+        styleScrollView()
+        styleMinimapView()
+
         let findViewController = FindViewController(target: self, childView: scrollView)
         addChild(findViewController)
         self.findViewController = findViewController
         self.view.addSubview(findViewController.view)
+        findViewController.view.translatesAutoresizingMaskIntoConstraints = false
         findViewController.view.viewDidMoveToSuperview()
         self.findViewController = findViewController
 
         if let _undoManager {
             textView.setUndoManager(_undoManager)
         }
-
-        styleTextView()
-        styleScrollView()
-        styleMinimapView()
 
         setUpHighlighter()
         setUpTextFormation()

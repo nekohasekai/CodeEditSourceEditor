@@ -38,7 +38,7 @@ class SuggestionViewController: NSViewController {
     weak var windowController: SuggestionController?
 
     override func loadView() {
-        super.loadView()
+        self.view = NSView()
         view.wantsLayer = true
         view.layer?.cornerRadius = 8.5
         view.layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor
