@@ -29,6 +29,14 @@ extension FindPanelViewModel {
 
         // Add all emphases
         emphasisManager.addEmphases(emphases, for: EmphasisGroup.find)
+
+        // EmphasisManager.handleSelections calls textView.scrollSelectionToVisible(),
+        // which relies on TextSelection.boundingRect — only populated when the selection
+        // is drawn. Off-screen matches keep boundingRect == .zero, making that scroll a
+        // no-op. scrollToRange(_:) derives the rect from the layout manager and works.
+        if let currentFindMatchIndex {
+            target.textView.scrollToRange(findMatches[currentFindMatchIndex])
+        }
     }
 
     func flashCurrentMatch() {
@@ -56,6 +64,9 @@ extension FindPanelViewModel {
 
         // Add the emphasis
         emphasisManager.addEmphases([emphasis], for: EmphasisGroup.find)
+
+        // See addMatchEmphases for why this explicit scroll is required.
+        target.textView.scrollToRange(currentMatch)
     }
 
     func clearMatchEmphases() {
